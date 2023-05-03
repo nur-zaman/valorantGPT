@@ -1,0 +1,8 @@
+{
+  "chatgptToken": {
+    "access_token": ""
+  },
+  "discord_webhook_url": "",
+  "in_game_name": "",
+  "players_to_avoid": []
+}
