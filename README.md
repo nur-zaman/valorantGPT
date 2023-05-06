@@ -28,7 +28,7 @@ pip install -r requirements.txt
 3. Configure the program:
 
    - Open the `config.json` file and provide the necessary values:
-     - `chatgptToken`: Access token for OpenAI's ChatGPT API. [How?](https://github.com/aaam/revChatGPT)
+     - `chatgptToken`: Access token for OpenAI's ChatGPT API. [How?](https://github.com/acheong08/ChatGPT)
      - `discord_webhook_url`: URL of the Discord webhook to send notifications.
      - `in_game_name`: Your in-game name in Valorant.
      - `players_to_avoid`: List of player names to avoid responding to.
