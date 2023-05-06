@@ -1,5 +1,10 @@
 # ValorantGPT
 
+<p align="center">
+  <a href="" rel="noopener">
+ <img width=128px height=128px src="https://i.postimg.cc/MHHtzdmX/valgpt.png" alt="Project logo"></a>
+</p>
+
 ValorantGPT is a program that enhances the in-game chat experience in Valorant by providing automated responses as a supportive teammate. It utilizes the power of OpenAI's GPT-3 language model to generate appropriate replies based on incoming messages.
 
 ## How It Works
