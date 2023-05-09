@@ -1,3 +1,8 @@
+<p align="center">
+  <a href="" rel="noopener">
+ <img width=284px height=128px src="https://i.postimg.cc/MHHtzdmX/valgpt.png" alt="Project logo"></a>
+</p>
+
 # ValorantGPT
 
 ValorantGPT is a program that enhances the in-game chat experience in Valorant by providing automated responses as a supportive teammate. It utilizes the power of OpenAI's GPT-3 language model to generate appropriate replies based on incoming messages.
@@ -28,7 +33,7 @@ pip install -r requirements.txt
 3. Configure the program:
 
    - Open the `config.json` file and provide the necessary values:
-     - `chatgptToken`: Access token for OpenAI's ChatGPT API. [How?](https://github.com/aaam/revChatGPT)
+     - `chatgptToken`: Access token for OpenAI's ChatGPT API. [How?](https://github.com/acheong08/ChatGPT)
      - `discord_webhook_url`: URL of the Discord webhook to send notifications.
      - `in_game_name`: Your in-game name in Valorant.
      - `players_to_avoid`: List of player names to avoid responding to.
@@ -48,3 +53,8 @@ pip install -r requirements.txt
 ## Contributing
 
 Contributions are welcome! If you have any ideas, suggestions, or improvements, feel free to open an issue or submit a pull request.
+
+## Legal
+This project is not affiliated with Riot Games or any of its employees and therefore does not reflect the views of said parties. This is purely a fan-made project to enhance VALORANT's inventory management.
+
+Riot Games does not endorse or sponsor this project. Riot Games, and all associated properties are trademarks or registered trademarks of Riot Games, Inc.
