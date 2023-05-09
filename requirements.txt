@@ -1,3 +1,11 @@
-revChatGPT==5.0.0
-urllib3==1.26.10
-websockets==10.4
+revChatGPT
+urllib3
+websockets
+curl_cffi
+aiohttp
+asyncio
+pynacl
+requests
+fake-useragent
+python-dotenv
+httpx
