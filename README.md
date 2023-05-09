@@ -33,8 +33,8 @@ pip install -r requirements.txt
 3. Configure the program:
 
    - Open the `config.json` file and provide the necessary values:
-     - `chatgptToken`: Access token for OpenAI's ChatGPT API. [How?](https://github.com/acheong08/ChatGPT)
-     - `discord_webhook_url`: URL of the Discord webhook to send notifications.
+     - `chatgptToken`: Access token for OpenAI's ChatGPT API. [How?](https://github.com/acheong08/ChatGPT) (Optional. <a href="#no-openai-key">Read this</a> )
+     - `discord_webhook_url`: URL of the Discord webhook to send notifications. (Optional)
      - `in_game_name`: Your in-game name in Valorant.
      - `players_to_avoid`: List of player names to avoid responding to.
 
@@ -49,6 +49,11 @@ pip install -r requirements.txt
 - Start the Valorant game client first.
 - Run the `start.bat` script to start the program.
 - The program will listen to the in-game chat and respond accordingly as a supportive teammate.
+
+    <h3 id="no-openai-key">No OpenAI KEY?</h3>
+
+    - Leave the `chatgptToken`  in `config.json` file empty.
+    - Run `start_free_version.bat` after starting valorant. 
 
 ## Contributing
 
