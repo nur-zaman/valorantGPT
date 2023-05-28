@@ -1,9 +1,9 @@
-import theb
+import deepai
 
 
 def useTheb(prompt):
     response = ""
-    for token in theb.Completion.create(prompt):
+    for token in deepai.Completion.create(prompt):
         response += token
     return response
 
@@ -21,7 +21,7 @@ while True:
         break
     sentMsg = f"valplayer#9999 : {prompt}"
     content_prompt = content + sentMsg
-    # response = useTheb(content_prompt)
-    response = useTheb(prompt)
+    response = useTheb(content_prompt)
+    # response = useTheb(prompt)
 
     print(f"Answer: {response}")

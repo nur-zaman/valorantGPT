@@ -9,7 +9,7 @@ import requests
 import json
 import time
 
-import theb
+import deepai
 
 config = json.load(open(r"config.json"))
 
@@ -50,9 +50,9 @@ def readInitPrompt(file_path):
     return content
 
 
-def useTheb(prompt):
+def use_deepai(prompt):
     response = ""
-    for data in theb.Completion.create(prompt=prompt):
+    for data in deepai.Completion.create(prompt=prompt):
         response += data
     return response
 
@@ -82,18 +82,20 @@ def handle(response, endpoint):
                     time.sleep(6)
                     content = readInitPrompt(r"prompt.txt")
                     content_prompt = content + sentMsg
-                    response = useTheb(content_prompt)
+                    response = use_deepai(content_prompt)
 
                     endpoint.postNewChatMessage(message["cid"], response)
 
-                    send_to_discord(
-                        webhook_url, f"```{sentMsg}\nchatGPT: {response}```"
-                    )
+                    if webhook_url != "":
+                        send_to_discord(
+                            webhook_url, f"```{sentMsg}\nchatGPT: {response}```"
+                        )
 
                     print(sentMsg)
                     print(f"chatGPT: {response}")
                 else:
-                    send_to_discord(webhook_url, f"```{sentMsg}```")
+                    if webhook_url != "":
+                        send_to_discord(webhook_url, f"```{sentMsg}```")
 
                     print(sentMsg)
 
