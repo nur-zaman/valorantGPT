@@ -11,7 +11,7 @@ import json
 import time
 
 
-config = json.load(open(r"config.json"))
+config = json.load(open(r"config.json", encoding="utf8"))
 
 id_seen = []
 

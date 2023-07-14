@@ -11,7 +11,7 @@ import time
 
 import deepai
 
-config = json.load(open(r"config.json"))
+config = json.load(open(r"config.json", encoding="utf8"))
 
 id_seen = []
 
@@ -79,7 +79,7 @@ def handle(response, endpoint):
                 )
                 sentMsg = f"{message['game_name']} : {message['body']}"
                 if message["game_name"] not in avoidList:
-                    time.sleep(6)
+                    time.sleep(10)
                     content = readInitPrompt(r"prompt.txt")
                     content_prompt = content + sentMsg
                     response = use_deepai(content_prompt)
