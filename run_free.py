@@ -9,8 +9,15 @@ import requests
 import json
 import time
 
-import deepai
+import freeGPT
 
+
+fg = freeGPT()
+print("Checking availabe free providers...")
+fg.update_working_providers()
+print("Done ")
+if len(fg.WORKING_PROVIDERS)==0:
+    print("NO FREE PROVIDER AVAILABE !!")
 config = json.load(open(r"config.json", encoding="utf8"))
 
 id_seen = []
@@ -50,11 +57,7 @@ def readInitPrompt(file_path):
     return content
 
 
-def use_deepai(prompt):
-    response = ""
-    for data in deepai.Completion.create(prompt=prompt):
-        response += data
-    return response
+
 
 
 def send_to_discord(webhook_url, message):
@@ -82,7 +85,7 @@ def handle(response, endpoint):
                     time.sleep(10)
                     content = readInitPrompt(r"prompt.txt")
                     content_prompt = content + sentMsg
-                    response = use_deepai(content_prompt)
+                    response = fg.try_all_working_providers(content_prompt)
 
                     endpoint.postNewChatMessage(message["cid"], response)
 
