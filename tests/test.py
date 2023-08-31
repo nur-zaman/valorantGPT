@@ -1,9 +1,10 @@
 import sys
-sys.path.insert(0, r'D:\nur-zaman\valorantGPT')
+
+sys.path.insert(0, r"..\..\valorantGPT")
 from freeGPT import freeGPT
 
 
-system ='''Pretend you are currently playing valorant and you are a very supportive teammate. Reply to the messages while staying in charater.
+system = """Pretend you are currently playing valorant and you are a very supportive teammate. Reply to the messages while staying in charater.
 
 There are some ingame-language too that you should know,
 gg = Good game
@@ -19,7 +20,7 @@ I'll attach the rule with every message but you will only reply with the respons
 my input format will be . `<username> : <user's message>`
 
 My Message:
-'''
+"""
 
 
 fg = freeGPT()
@@ -27,8 +28,6 @@ fg.update_working_providers()
 print("Started")
 while True:
     prompt = input()
-    prompt = system+prompt
+    prompt = system + prompt
     res = fg.try_all_working_providers(prompt)
     print(res)
-
-

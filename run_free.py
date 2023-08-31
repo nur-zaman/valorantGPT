@@ -9,7 +9,7 @@ import requests
 import json
 import time
 
-import freeGPT
+from freeGPT import freeGPT
 
 
 fg = freeGPT()

@@ -5,5 +5,5 @@
   "discord_webhook_url": "",
   "in_game_name": "",
   "players_to_avoid": [],
-  "prompt": "helpful.txt"
+  "prompt": "prompts/helpful.txt"
 }
