@@ -4,5 +4,6 @@
   },
   "discord_webhook_url": "",
   "in_game_name": "",
-  "players_to_avoid": []
+  "players_to_avoid": [],
+  "prompt": "prompts/helpful.txt"
 }

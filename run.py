@@ -21,6 +21,8 @@ avoidList.append(config["in_game_name"])
 
 webhook_url = config["discord_webhook_url"]
 
+prompt_path = config["prompt"]
+
 
 async def recconect_to_websocket():
     urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
@@ -68,7 +70,7 @@ def handle(response, endpoint, chatgpt):
                 sentMsg = f"{message['game_name']} : {message['body']}"
                 if message["game_name"] not in avoidList:
                     time.sleep(6)
-                    chatgpt.content = chatgpt.readInitPrompt(r"prompt.txt")
+                    chatgpt.content = chatgpt.readInitPrompt(prompt_path)
                     content_prompt = chatgpt.content + sentMsg
                     response = chatgpt.generate_response(content_prompt)
 
