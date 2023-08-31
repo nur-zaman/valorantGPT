@@ -16,7 +16,7 @@ fg = freeGPT()
 print("Checking availabe free providers...")
 fg.update_working_providers()
 print("Done ")
-if len(fg.WORKING_PROVIDERS)==0:
+if len(fg.WORKING_PROVIDERS) == 0:
     print("NO FREE PROVIDER AVAILABE !!")
 config = json.load(open(r"config.json", encoding="utf8"))
 
@@ -27,6 +27,8 @@ avoidList = config["players_to_avoid"]
 avoidList.append(config["in_game_name"])
 
 webhook_url = config["discord_webhook_url"]
+
+prompt_path = config["prompt"]
 
 
 async def recconect_to_websocket():
@@ -57,9 +59,6 @@ def readInitPrompt(file_path):
     return content
 
 
-
-
-
 def send_to_discord(webhook_url, message):
     data = {"content": message}
     headers = {"Content-Type": "application/json"}
@@ -83,7 +82,7 @@ def handle(response, endpoint):
                 sentMsg = f"{message['game_name']} : {message['body']}"
                 if message["game_name"] not in avoidList:
                     time.sleep(10)
-                    content = readInitPrompt(r"prompt.txt")
+                    content = readInitPrompt(prompt_path)
                     content_prompt = content + sentMsg
                     response = fg.try_all_working_providers(content_prompt)
 
