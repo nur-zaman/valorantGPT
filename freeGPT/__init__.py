@@ -1,30 +1,28 @@
 from g4f import BaseProvider, models, Provider
-
+import random
 
 
 class freeGPT:
-    WORKING_PROVIDERS =[]
+    WORKING_PROVIDERS = []
 
     def __init__(self) -> None:
         pass
 
     def get_providers(self) -> list[type[BaseProvider]]:
         provider_names = dir(Provider)
-        ignore_names = [
-            "base_provider",
-            "BaseProvider"
-        ]
+        ignore_names = ["base_provider", "BaseProvider"]
         provider_names = [
             provider_name
             for provider_name in provider_names
             if not provider_name.startswith("__") and provider_name not in ignore_names
         ]
-        return [getattr(Provider, provider_name) for provider_name in sorted(provider_names)]
+        return [
+            getattr(Provider, provider_name) for provider_name in sorted(provider_names)
+        ]
 
-
-    def create_response(self,_provider: type[BaseProvider],prompt='Hello') -> str:
+    def create_response(self, _provider: type[BaseProvider], prompt="Hello") -> str:
         if _provider.supports_gpt_35_turbo:
-            model = models.gpt_35_turbo.name    
+            model = models.gpt_35_turbo.name
         elif _provider.supports_gpt_4:
             model = models.gpt_4
         elif hasattr(_provider, "model"):
@@ -38,7 +36,7 @@ class freeGPT:
         )
         return "".join(response)
 
-    def test(self,_provider: type[BaseProvider]) -> bool:
+    def test(self, _provider: type[BaseProvider]) -> bool:
         try:
             response = self.create_response(_provider)
             assert type(response) is str
@@ -46,11 +44,19 @@ class freeGPT:
             return response
         except Exception as e:
             return False
+
     def update_working_providers(self):
         providers = self.get_providers()
 
         for _provider in providers:
-            if _provider.__name__ in ['ChatgptLogin','Opchatgpts','Lockchat','You','Acytoo']:
+            if _provider.__name__ in [
+                "ChatgptLogin",
+                "Opchatgpts",
+                "Lockchat",
+                "You",
+                "Acytoo",
+                "V50",
+            ]:
                 continue
             if _provider.needs_auth:
                 continue
@@ -64,14 +70,22 @@ class freeGPT:
         print(f"Working Providers: {self.WORKING_PROVIDERS}")
 
         print()
-    def try_all_working_providers(self,prompt):
-        for _provider in self.WORKING_PROVIDERS:
+
+    def update_working_providers_from_name(self, providers):
+        all_providers = self.get_providers()
+        for _provider in all_providers:
+            if _provider.__name__ in providers:
+                self.WORKING_PROVIDERS.append(_provider)
+
+        print()
+
+    def try_all_working_providers(self, prompt):
+        providers = self.WORKING_PROVIDERS
+        random.shuffle(providers)
+        for _provider in providers:
             try:
-                response = self.create_response(_provider,prompt)
+                response = self.create_response(_provider, prompt)
                 if len(response) > 0:
                     return response
             except Exception as e:
                 continue
-
-
-
