@@ -13,8 +13,8 @@ The program connects to the Valorant game client through a WebSocket connection 
 
 ## Prerequisites
 
-- Python 3.7 or higher
-- Valorant game client running
+- Python 3.10.9 or higher
+- Valorant game running
 
 ## Installation
 
@@ -32,15 +32,15 @@ pip install -r requirements.txt
 
 3. Configure the program:
 
-   - Open the `config.json` file and provide the necessary values:
-     - `chatgptToken`: Access token for OpenAI's ChatGPT API. [How?](https://github.com/acheong08/ChatGPT) (Optional. <a href="#no-openai-key">Read this</a> )
+   - Rename the `config.json.example` file to `config.json` and provide the necessary values:
+     - ~~`chatgptToken`: Access token for OpenAI's ChatGPT API. [How?](https://github.com/acheong08/ChatGPT) (Optional. <a href="#no-openai-key">Read this</a> )~~ Now I'm only working on free APIs
      - `discord_webhook_url`: URL of the Discord webhook to send notifications. (Optional)
      - `in_game_name`: Your in-game name in Valorant.
      - `players_to_avoid`: List of player names to avoid responding to.
 
 4. Customize the prompt:
 
-    - Open the prompt.txt file.
+    - Put your prompt file in the prompts folder and point it in the `config.json` file. 
     - Modify the existing content to match the desired persona and character you want to portray as a supportive teammate. You can include phrases, keywords, or responses that align with your desired in-game persona.
 
 
@@ -50,10 +50,10 @@ pip install -r requirements.txt
 - Run the `start.bat` script to start the program.
 - The program will listen to the in-game chat and respond accordingly as a supportive teammate.
 
-    <h3 id="no-openai-key">No OpenAI KEY?</h3>
+    ~~<h3 id="no-openai-key">No OpenAI KEY?</h3>~~(Works without api key)
 
-    - Leave the `chatgptToken`  in `config.json` file empty.
-    - Run `start_free_version.bat` after starting valorant. 
+    - ~~Leave the `chatgptToken`  in `config.json` file empty.~~
+    - ~~Run `start_free_version.bat` after starting valorant.~~
 
 ## Contributing
 
