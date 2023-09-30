@@ -1,18 +1,17 @@
+import asyncio
+import datetime
+import json
+import os
+import ssl
+import time
+
+import requests
+import urllib3
 import websockets
 import websockets.client
-import ssl
-import json
-import urllib3
-import asyncio
+
 from endpoints import Endpoints
-import requests
-import json
-import time
-import datetime
-import os
-
 from freeGPT import freeGPT
-
 
 config = json.load(open(r"config.json", encoding="utf8"))
 
@@ -86,6 +85,7 @@ async def recconect_to_websocket():
 
     url = f"wss://127.0.0.1:{port}"
     websocket_client = websockets.connect(url, ssl=ssl_context, extra_headers=headers)
+
     async with websocket_client as websocket:
         await websocket.send('[5, "OnJsonApiEvent_chat_v6_messages"]')
         while True:
@@ -123,29 +123,41 @@ def handle(response, endpoint):
                     f"{message['game_name']}#{message['game_tag']} : {message['body']}"
                 )
                 sentMsg = f"{message['game_name']} : {message['body']}"
+                # print("IN GAME NAME", message["game_name"])
                 if message["game_name"] not in avoidList:
-                    time.sleep(10)
+                    time.sleep(3)
                     content = readInitPrompt(prompt_path)
                     content_prompt = content + sentMsg
                     response = fg.try_all_working_providers(content_prompt)
-
-                    endpoint.postNewChatMessage(message["cid"], response)
-
-                    if webhook_url != "":
-                        send_to_discord(
-                            webhook_url, f"```{sentMsg}\nchatGPT: {response}```"
+                    if len(response) > 200:
+                        if webhook_url != "":
+                            send_to_discord(
+                                webhook_url,
+                                f"```!!THIS MESSAGE WAS NOT SENT FOR BEING TOO LONG!! {sentMsg}\nchatGPT: {response}```",
+                            )
+                        print(
+                            f"!!THIS MESSAGE WAS NOT SENT FOR BEING TOO LONG!! - > chatGPT: {response}"
                         )
-
-                    print(sentMsg)
-                    print(f"chatGPT: {response}")
+                    else:
+                        try:
+                            endpoint.postNewChatMessage(message["cid"], response)
+                        except Exception as e:
+                            print("Failed To Send Message in Valorant ...")
+                        if webhook_url != "":
+                            send_to_discord(
+                                webhook_url, f"```{sentMsg}\nchatGPT: {response}```"
+                            )
+                        print(f"chatGPT: {response}")
                 else:
                     if webhook_url != "":
                         send_to_discord(webhook_url, f"```{sentMsg}```")
 
-                    print(sentMsg)
+                    print(f"chatGPT: {response}")
 
                 id_seen.append(message["id"])
 
+
+print("...........websocket_client starting.........")
 
 loop = asyncio.new_event_loop()
 asyncio.set_event_loop(loop)
