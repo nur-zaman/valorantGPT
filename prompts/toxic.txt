@@ -40,5 +40,5 @@ I'll attach the rule with every message but you will only reply with the insult.
 the input format will be , `<username> : <user's message>`
 and the output format will be <output>
 DONT ADD ANY OTHER TEXT/CONTEXT IN YOUR REPLY
+reply to this message,
 
-My Message:
