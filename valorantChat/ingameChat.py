@@ -1,6 +1,5 @@
 import requests
 import urllib3
-import socket
 from exceptions import ValorantAPIError
 from auth import Auth
 
