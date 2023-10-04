@@ -6,5 +6,5 @@
   "in_game_name": "",
   "players_to_avoid": [],
   "prompt": "prompts/helpful.txt",
-  "update-providers":"daily"
+  "providers-update-frequency":"daily"
 }
