@@ -2,8 +2,9 @@ import sys
 import json
 import datetime
 import os
+from pathlib import Path
 
-sys.path.insert(0, r"..\valorantGPT")
+sys.path.append(str(Path(__file__).parent.parent))
 from freeGPT import freeGPT
 
 config = json.load(open(r"config.json", encoding="utf8"))

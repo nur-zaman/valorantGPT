@@ -1,37 +1,38 @@
-from g4f import BaseProvider, models, Provider
 import random
 import time
+
+from colorama import Fore, Style
+from g4f import BaseProvider, Provider, models
 
 
 class freeGPT:
     WORKING_PROVIDERS = []
 
-    def __init__(self) -> None:
+    def __init__(self,log=False) -> None:
+        logging = log
         pass
 
     def get_providers(self) -> list[type[BaseProvider]]:
         provider_names = dir(Provider)
-        ignore_names = ["base_provider", "BaseProvider"]
-        provider_names = [
-            provider_name
+        ignore_names = [
+            "annotations",
+            "helper",
+            "base_provider",
+            "retry_provider",
+            "BaseProvider",
+            "AsyncProvider",
+            "AsyncGeneratorProvider",
+            "RetryProvider",
+        ]
+        return [
+            getattr(Provider, provider_name)
             for provider_name in provider_names
             if not provider_name.startswith("__") and provider_name not in ignore_names
         ]
-        return [
-            getattr(Provider, provider_name) for provider_name in sorted(provider_names)
-        ]
 
-    def create_response(
-        self, _provider: type[BaseProvider], prompt="Hello", role="user"
-    ) -> str:
-        if _provider.supports_gpt_35_turbo:
-            model = models.gpt_35_turbo.name
-        elif _provider.supports_gpt_4:
-            model = models.gpt_4
-        elif hasattr(_provider, "model"):
-            model = _provider.model
-        else:
-            model = None
+
+    def create_response(self,_provider: type[BaseProvider], prompt:str = "hello", role:str="user") -> str:
+        model = models.gpt_35_turbo.name if _provider.supports_gpt_35_turbo else models.default.name
         response = _provider.create_completion(
             model=model,
             messages=[{"role": f"{role}", "content": f"{prompt}"}],
@@ -39,13 +40,15 @@ class freeGPT:
         )
         return "".join(response)
 
-    def test(self, _provider: type[BaseProvider]) -> bool:
+    def test(self,_provider: type[BaseProvider]) -> bool:
         try:
             response = self.create_response(_provider)
             assert type(response) is str
-            assert len(response.replace(" ", "")) > 0
+            assert len(response) > 0
             return response
         except Exception as e:
+            if self.logging:
+                print(e)
             return False
 
     def update_working_providers(self):
@@ -55,11 +58,7 @@ class freeGPT:
             print(_provider)
             try:
                 if _provider.__name__ in [
-                    "Aibn",
-                    "Acytoo",
-                    "Vitalentum",
                     "Wewordle",
-                    "ChatBase",
                 ]:
                     continue
                 if _provider.needs_auth:
