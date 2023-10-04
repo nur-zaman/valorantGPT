@@ -2,3 +2,4 @@ g4f
 urllib3
 websockets
 asyncio
+colorama
