@@ -1,7 +1,7 @@
 import requests
 import urllib3
 from exceptions import ValorantAPIError
-from auth import Auth
+from valorantChat.auth import Auth
 
 
 class Endpoints:
