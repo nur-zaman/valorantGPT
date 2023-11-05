@@ -1,4 +1,3 @@
-
 import ssl
 
 import urllib3
@@ -26,7 +25,10 @@ async def reconnect_to_websocket(fg):
         await websocket.send('[5, "OnJsonApiEvent_chat_v6_messages"]')
         while True:
             response = await websocket.recv()
-            h = handle(response, endpoint,fg)
+            try:
+                h = await handle(response, endpoint, fg)
+            except Exception as e:
+                print(e)
             if h is not None:
                 await websocket.close()
                 return h

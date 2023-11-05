@@ -8,7 +8,7 @@ from g4f import BaseProvider, Provider, models
 class freeGPT:
     WORKING_PROVIDERS = []
 
-    def __init__(self,log=False) -> None:
+    def __init__(self, log=False) -> None:
         logging = log
         pass
 
@@ -30,9 +30,14 @@ class freeGPT:
             if not provider_name.startswith("__") and provider_name not in ignore_names
         ]
 
-
-    def create_response(self,_provider: type[BaseProvider], prompt:str = "hello", role:str="user") -> str:
-        model = models.gpt_35_turbo.name if _provider.supports_gpt_35_turbo else models.default.name
+    async def create_response(
+        self, _provider: type[BaseProvider], prompt: str = "hello", role: str = "user"
+    ) -> str:
+        model = (
+            models.gpt_35_turbo.name
+            if _provider.supports_gpt_35_turbo
+            else models.default.name
+        )
         response = _provider.create_completion(
             model=model,
             messages=[{"role": f"{role}", "content": f"{prompt}"}],
@@ -40,7 +45,7 @@ class freeGPT:
         )
         return "".join(response)
 
-    def test(self,_provider: type[BaseProvider]) -> bool:
+    def test(self, _provider: type[BaseProvider]) -> bool:
         try:
             response = self.create_response(_provider)
             assert type(response) is str
@@ -55,11 +60,9 @@ class freeGPT:
         providers = self.get_providers()
 
         for _provider in providers:
-            print(_provider)
+            # print(_provider)
             try:
-                if _provider.__name__ in [
-                    "Wewordle",
-                ]:
+                if _provider.__name__ in ["Wewordle", "Phind", "ChatForAi", "Yqcloud"]:
                     continue
                 if _provider.needs_auth:
                     continue
@@ -95,7 +98,26 @@ class freeGPT:
 
         print(self.WORKING_PROVIDERS)
 
-    def try_all_working_providers(self, prompt, role="user"):
+    # def try_random_provider(self, prompt: str, role="user") -> str:
+    #     providers = self.WORKING_PROVIDERS
+    #     random_provider = random.choice(providers)
+    #     print("Trying ", random_provider.__name__)
+    #     start_time = time.time()  # Record the start time
+    #     try:
+    #         response = self.create_response(random_provider, prompt, role=role)
+    #         if len(response) > 0:
+    #             end_time = time.time()  # Record the end time
+    #             duration = end_time - start_time  # Calculate duration
+    #             print(
+    #                 f"Response from {random_provider.__name__} took {duration} seconds"
+    #             )
+    #             return response
+    #     except Exception as e:
+    #         print(e)
+    #         #     continue
+    #     return ""
+
+    def try_all_working_providers(self, prompt: str, role="user") -> str:
         providers = self.WORKING_PROVIDERS
         random.shuffle(providers)
         for _provider in providers:
@@ -110,4 +132,23 @@ class freeGPT:
                     return response
             except Exception as e:
                 print(e)
-                continue
+            #     continue
+        return ""
+
+    async def try_random_provider(self, prompt: str, role="user") -> str:
+        providers = self.WORKING_PROVIDERS
+        random_provider = random.choice(providers)
+        print("Trying ", random_provider.__name__)
+        start_time = time.time()  # Record the start time
+        try:
+            response = await self.create_response(random_provider, prompt, role=role)
+            if len(response) > 0:
+                end_time = time.time()  # Record the end time
+                duration = end_time - start_time  # Calculate duration
+                print(
+                    f"Response from {random_provider.__name__} took {duration} seconds"
+                )
+                return response
+        except Exception as e:
+            print(e)
+        return ""
